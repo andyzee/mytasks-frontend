@@ -1,0 +1,17 @@
+<div class="projects-container">
+  <mat-card class="project" *ngFor="let project of projects">
+    <header>
+      {{ project.title }}
+    </header>
+
+    <body>
+      <ul>
+        <li *ngFor="let todo of project.todos">
+          <mat-checkbox>
+            {{ todo.text }}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </body>
+  </mat-card>
+</div>
