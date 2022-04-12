@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Project } from '../interfaces';
+import { Project, Todo } from '../interfaces';
 
 @Component({
   selector: 'app-projects',
@@ -10,6 +10,10 @@ import { Project } from '../interfaces';
 export class ProjectsComponent implements OnInit {
 
   projects: Project[] = [];
+
+  @Input() input_checked: boolean = true;
+  @Input() input_todo!: Todo;
+  @Input() input_project!: Project;
 
   constructor(private dataService: DataService) { }
 
@@ -23,8 +27,8 @@ export class ProjectsComponent implements OnInit {
     )
   }
 
-  toggleTodo(isCompleted: boolean) {
-    console.log()
+  toggleTodo() {
+    console.log(this.input_checked, this.input_project, this.input_todo)
   }
 
 }

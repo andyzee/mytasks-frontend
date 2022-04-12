@@ -7,7 +7,7 @@
     <body>
       <ul>
         <li *ngFor="let todo of project.todos">
-          <mat-checkbox>
+          <mat-checkbox (change)="toggleTodo()" [(ngModel)]="todo.isCompleted">
             {{ todo.text }}
           </mat-checkbox>
         </li>
