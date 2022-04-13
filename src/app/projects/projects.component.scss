@@ -1,3 +1,13 @@
+.add-btn {
+  position: absolute;
+  right: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.toolbar {
+  align-items: center;
+  justify-content: center;
+}
 .projects-container {
   display: flex;
   flex-wrap: wrap;
@@ -26,10 +36,6 @@
 
       li {
         padding: .3rem 0;
-      }
-
-      .mat-checkbox-checked {
-        text-decoration: line-through;
       }
     }
   }

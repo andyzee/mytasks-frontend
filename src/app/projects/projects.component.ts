@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Project, Todo } from '../interfaces';
+import { Project } from '../model/Project';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTodoDialog } from './todo/create-todo-dialog.component';
+
 
 @Component({
   selector: 'app-projects',
@@ -11,11 +14,14 @@ export class ProjectsComponent implements OnInit {
 
   projects: Project[] = [];
 
-  @Input() input_checked: boolean = true;
-  @Input() input_todo!: Todo;
-  @Input() input_project!: Project;
+  constructor(private dataService: DataService, public dialog: MatDialog) { }
 
-  constructor(private dataService: DataService) { }
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(CreateTodoDialog, {
+      width: '300px',
+      data: {projects: this.projects}
+    });
+  }
 
   ngOnInit(): void {
     this.getProjects()
@@ -25,10 +31,6 @@ export class ProjectsComponent implements OnInit {
     this.dataService.getProjects().subscribe(
       projects => this.projects = projects
     )
-  }
-
-  toggleTodo() {
-    console.log(this.input_checked, this.input_project, this.input_todo)
   }
 
 }

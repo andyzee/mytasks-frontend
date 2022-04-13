@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, of, tap } from "rxjs";
+import { plainToClass } from "class-transformer";
+import { catchError, Observable, of, tap, map } from "rxjs";
 import { AppSettings } from "./app.settings";
-import { Project, Todo } from "./interfaces";
+import { Project } from './model/Project';
+import { Todo } from './model/Todo';
 
 
 @Injectable({
@@ -22,6 +24,7 @@ export class DataService {
   getProjects(): Observable<Project[]> {
     const url = AppSettings.apiUrl + '/projects'
     return this.http.get<Project[]>(url).pipe(
+      map((objects: Object[]) => objects.map(object => plainToClass(Project, object))),
       tap((projects: Project[]) => this.log('fetched projects', projects)),
       catchError(this.handleError<Project[]>('getProjects', []))
     )
@@ -30,15 +33,20 @@ export class DataService {
   createTodo(todo: Todo): Observable<Todo> {
     const url = AppSettings.apiUrl + '/todos'
     return this.http.post<Todo>(url, todo, this.httpOptions).pipe(
-      tap((newTodo: Todo) => { this.log('added new todo', todo) }),
+      map((object: Object) => plainToClass(Todo, object)),
+      tap((newTodo: Todo) => { this.log('added new todo', newTodo) }),
       catchError(this.handleError<Todo>('createTodo'))
     )
   }
 
-  patchTodo(todo: Todo, project: Project): Observable<Todo> {
-    const url = `${AppSettings.apiUrl}/projects/${project.id}/todos/${todo.id}`;
-    return this.http.patch<Todo>(url, todo, this.httpOptions).pipe(
-      tap((newTodo: Todo) => { this.log('patched todo', todo) }),
+  patchTodo(todo: Todo, project_id: number): Observable<Todo> {
+    const url = `${AppSettings.apiUrl}/projects/${project_id}/todos/${todo.id}`;
+    const patch_data = {
+      isCompleted: todo.isCompleted
+    }
+    return this.http.patch<Todo>(url, patch_data, this.httpOptions).pipe(
+      map((object: Object) => plainToClass(Todo, object)),
+      tap((newTodo: Todo) => { this.log('patched todo', newTodo) }),
       catchError(this.handleError<Todo>('patchTodo'))
     )
   }

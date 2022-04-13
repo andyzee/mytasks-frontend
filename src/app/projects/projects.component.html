@@ -1,3 +1,8 @@
+<mat-toolbar color="primary" class="toolbar">
+  <span>Задачи</span>
+  <mat-icon class="add-btn" (click)="openCreateDialog()">+</mat-icon>
+</mat-toolbar>
+
 <div class="projects-container">
   <mat-card class="project" *ngFor="let project of projects">
     <header>
@@ -6,10 +11,8 @@
 
     <body>
       <ul>
-        <li *ngFor="let todo of project.todos">
-          <mat-checkbox (change)="toggleTodo()" [(ngModel)]="todo.isCompleted">
-            {{ todo.text }}
-          </mat-checkbox>
+        <li *ngFor="let todo of project.todos; let i = index">
+          <app-todo [(todo)]="project.todos[i]" [project_id]="project.id"></app-todo>
         </li>
       </ul>
     </body>
