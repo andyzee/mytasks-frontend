@@ -25,17 +25,19 @@ export class DataService {
     const url = AppSettings.apiUrl + '/projects'
     return this.http.get<Project[]>(url).pipe(
       map((objects: Object[]) => objects.map(object => plainToClass(Project, object))),
-      tap((projects: Project[]) => this.log('fetched projects', projects)),
+      // tap((projects: Project[]) => this.log('fetched projects', projects)),
       catchError(this.handleError<Project[]>('getProjects', []))
     )
   }
 
-  createTodo(todo: Todo): Observable<Todo> {
+  createTodo(todo: Todo): Observable<Project[]> {
     const url = AppSettings.apiUrl + '/todos'
-    return this.http.post<Todo>(url, todo, this.httpOptions).pipe(
-      map((object: Object) => plainToClass(Todo, object)),
-      tap((newTodo: Todo) => { this.log('added new todo', newTodo) }),
-      catchError(this.handleError<Todo>('createTodo'))
+    return this.http.post<Project[]>(url, todo, this.httpOptions).pipe(
+      map((objects: Object[]) => objects.map(object => plainToClass(Project, object))),
+      catchError(this.handleError<Project[]>('createTodo', []))
+      // map((object: Object) => plainToClass(Todo, object)),
+      // tap((newTodo: Todo) => { this.log('added new todo', newTodo) }),
+      // catchError(this.handleError<Todo>('createTodo'))
     )
   }
 
@@ -46,7 +48,7 @@ export class DataService {
     }
     return this.http.patch<Todo>(url, patch_data, this.httpOptions).pipe(
       map((object: Object) => plainToClass(Todo, object)),
-      tap((newTodo: Todo) => { this.log('patched todo', newTodo) }),
+      // tap((newTodo: Todo) => { this.log('patched todo', newTodo) }),
       catchError(this.handleError<Todo>('patchTodo'))
     )
   }

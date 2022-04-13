@@ -19,8 +19,10 @@ export class ProjectsComponent implements OnInit {
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateTodoDialog, {
       width: '300px',
-      data: {projects: this.projects}
+      data: { projects: this.projects }
     });
+
+    dialogRef.componentInstance.projectsUpdateEvent.subscribe(projects => this.projects = projects)
   }
 
   ngOnInit(): void {
