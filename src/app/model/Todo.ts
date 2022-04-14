@@ -1,6 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { CTValidate } from "../util/decorators";
-import { Model } from "./Model";
+import { FCField } from "../util/decorators";
 
 export function requiredIf(prop: string, value: any): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -12,24 +11,20 @@ export function requiredIf(prop: string, value: any): ValidatorFn {
   };
 }
 
-export class Todo extends Model {
-  static override fields = [
-    'text',
-    'isCompleted',
-    'project_id',
-    'project_title'
-  ];
+export class Todo {
+  @FCField()
+  id: number | null = null;
 
-  id?: number;
+  @FCField([Validators.required, Validators.minLength(3)])
+  text: string | null = null;
 
-  @CTValidate([Validators.required, Validators.minLength(3)])
-  text!: string;
-
+  @FCField()
   isCompleted: boolean = false;
 
-  @CTValidate([Validators.required])
-  project_id!: number;
+  @FCField([Validators.required])
+  project_id: number | null = null;
 
-  @CTValidate([requiredIf('project_id', -1), Validators.minLength(3)])
-  project_title?: string;
+  @FCField([requiredIf('project_id', -1), Validators.minLength(3)])
+  project_title: string | null = null;
+
 }

@@ -1,11 +1,7 @@
 // add native validators in array to model for CTCreateFormGroup
 
-export function CTValidate(validators: any[]) {
+export function FCField(validators: Function[] = []) {
   return function (target: Object, propertyKey: string) {
-    const metadata = {
-      propertyKey,
-      validators,
-    };
-    Reflect.defineMetadata(`validators_${propertyKey}`, metadata, target.constructor);
+    Reflect.defineMetadata(`fcfield_${propertyKey}`, validators, target.constructor);
   }
 }

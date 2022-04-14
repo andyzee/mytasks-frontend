@@ -1,19 +1,13 @@
-import { ValidatorFn, Validators } from "@angular/forms";
-import { Expose, Type } from "class-transformer";
-import { CTValidate } from "../util/decorators";
-import { Model } from "./Model";
+import { Validators } from "@angular/forms";
+import { Type } from "class-transformer";
+import { FCField } from "../util/decorators";
 import { Todo } from "./Todo";
 
-export class Project extends Model {
-  static override fields = [
-    'id',
-    'title'
-  ]
-
+export class Project {
+  @FCField()
   id: number = -1;
 
-  @CTValidate([Validators.required, Validators.minLength(3)])
-  @Expose()
+  @FCField([Validators.required, Validators.minLength(3)])
   title: string = '';
 
   @Type(() => Todo)
