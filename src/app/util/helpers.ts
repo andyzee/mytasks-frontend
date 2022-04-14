@@ -1,4 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
+import { Model } from "../model/Model";
 import { Todo } from "../model/Todo";
 
 type FGConfigType = {
@@ -9,14 +10,15 @@ type WFields = {
   fields: string[]
 }
 
-export function CTCreateFormGroup(target: any): FormGroup {
+export function CTCreateFormGroup(target: Model): FormGroup {
 
   const fgConfig: FGConfigType = {};
-  const reflection = target.constructor as WFields;
+  // target.constructor.fields is guaranteed (is static prop of Model class and is overriden in children)
+  const reflection = target.constructor as unknown as WFields;
   reflection.fields.forEach((prop: string) => {
     const metadata = Reflect.getMetadata(`validators_${prop}`, target.constructor);
     const validators = metadata ? metadata : []
-    const control = new FormControl(target[prop], validators)
+    const control = new FormControl(target[prop] as any, validators)
     fgConfig[prop] = control;
   });
 

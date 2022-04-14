@@ -12,8 +12,8 @@ export function requiredIf(prop: string, value: any): ValidatorFn {
   };
 }
 
-export class Todo implements Model {
-  static fields = [
+export class Todo extends Model {
+  static override fields = [
     'text',
     'isCompleted',
     'project_id',

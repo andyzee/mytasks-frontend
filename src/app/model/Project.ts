@@ -4,8 +4,8 @@ import { CTValidate } from "../util/decorators";
 import { Model } from "./Model";
 import { Todo } from "./Todo";
 
-export class Project implements Model {
-  static fields = [
+export class Project extends Model {
+  static override fields = [
     'id',
     'title'
   ]
