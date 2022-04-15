@@ -7,8 +7,8 @@ type FGConfigType = {
 export function CTCreateFormGroup(target: Object): FormGroup {
   const fgConfig: FGConfigType = {};
 
-  let propName: keyof typeof target;
-  for (propName in target) {
+  type Model = keyof typeof target;
+  for (let propName of <Model[]>Object.getOwnPropertyNames(target)) {
     const validators = Reflect.getMetadata(`fcfield_${propName}`, target.constructor);
     if (!validators) continue;
     const control = new FormControl(target[propName], validators);
