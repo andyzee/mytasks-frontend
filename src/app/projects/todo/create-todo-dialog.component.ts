@@ -1,11 +1,10 @@
 import { Component, Inject, OnInit, Output, EventEmitter } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { plainToClass } from "class-transformer";
 import { DataService } from "src/app/data.service";
 import { Project } from "src/app/model/Project";
 import { Todo } from "src/app/model/Todo";
-import { CTCreateFormGroup } from "src/app/util/helpers";
 
 export interface DialogData {
   projects: Project[]
@@ -17,16 +16,16 @@ export interface DialogData {
 })
 export class CreateTodoDialog implements OnInit {
 
-  @Output() projectsUpdateEvent = new EventEmitter<Project[]>();
+  @Output() todoCreateEvent = new EventEmitter<Todo>();
 
-  todo: Todo = new Todo;
   projectList: Project[] = [];
   todoForm!: FormGroup;
 
   constructor(
     private dataService: DataService,
     public dialogRef: MatDialogRef<CreateTodoDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public fb: FormBuilder
   ) {
     this.projectList = [...data.projects];
     const newCat = plainToClass(Project, { id: -1, title: 'Новая категория' })
@@ -38,14 +37,18 @@ export class CreateTodoDialog implements OnInit {
   }
 
   initForm() {
-    this.todoForm = CTCreateFormGroup(this.todo);
+    this.todoForm = this.fb.group({
+      text: ['', [Validators.required, Validators.minLength(3)]],
+      project_id: ['', [Validators.required]],
+      project_title: ['', [requiredIf('project_id', -1)]]
+    })
   }
 
   onSubmit() {
     if (this.todoForm.invalid) return;
 
-    this.dataService.createTodo(this.todoForm.value).subscribe(projects => {
-      this.projectsUpdateEvent.emit(projects);
+    this.dataService.createTodo(this.todoForm.value).subscribe(todo => {
+      this.todoCreateEvent.emit(todo);
       this.dialogRef.close();
     });
 
@@ -64,4 +67,14 @@ export class CreateTodoDialog implements OnInit {
 
     return messages.join(', ')
   }
+}
+
+function requiredIf(prop: string, value: any): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.parent)
+      return null
+
+    const propDependentOn = <AbstractControl>control.parent.get(prop);
+    return propDependentOn.value == value ? Validators.required(control) : null
+  };
 }
