@@ -18,7 +18,7 @@ export class CreateTodoDialog implements OnInit {
 
   @Output() todoCreateEvent = new EventEmitter<Todo>();
 
-  projectList: Project[] = [];
+  projectList: Project[];
   todoForm!: FormGroup;
 
   constructor(
@@ -40,7 +40,7 @@ export class CreateTodoDialog implements OnInit {
     this.todoForm = this.fb.group({
       text: ['', [Validators.required, Validators.minLength(3)]],
       project_id: ['', [Validators.required]],
-      project_title: ['', [requiredIf('project_id', -1)]]
+      project_title: ['', [requiredIf('project_id', -1), Validators.minLength(3)]]
     })
   }
 
@@ -57,6 +57,7 @@ export class CreateTodoDialog implements OnInit {
   isInvalid(prop: string) {
     return this.todoForm.controls[prop]?.invalid
   }
+
   errorMessage(prop: string) {
     const errors = <any>this.todoForm.controls[prop].errors;
     let messages = [];
@@ -66,6 +67,10 @@ export class CreateTodoDialog implements OnInit {
       messages.push(`Минимальная длина: ${errors['minlength']['requiredLength']}`)
 
     return messages.join(', ')
+  }
+
+  projectListTrackFn(index: number, project: Project) {
+    return project.id;
   }
 }
 

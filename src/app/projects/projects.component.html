@@ -11,7 +11,7 @@
 
     <body>
       <ul>
-        <li *ngFor="let todo of project.todos; let i = index">
+        <li *ngFor="let todo of project.todos; let i = index; trackBy: todoTrackFn">
           <app-todo [(todo)]="project.todos[i]" [project_id]="project.id"></app-todo>
         </li>
       </ul>

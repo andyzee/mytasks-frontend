@@ -36,6 +36,10 @@ export class ProjectsComponent implements OnInit {
     )
   }
 
+  todoTrackFn(index: number, item: Todo) {
+    return item.id
+  }
+
   handleCreateTodoEvent(todo: Todo) {
     if (!todo.project) {
       throw TypeError('todo.project is undefined')
