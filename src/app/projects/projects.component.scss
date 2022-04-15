@@ -1,23 +1,23 @@
-.add-btn {
-  position: absolute;
-  right: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-}
 .toolbar {
-  align-items: center;
-  justify-content: center;
+  span {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
 }
+
 .projects-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  background-color: #f4f4f4;
+  justify-content: space-evenly;
+  background-color: #F8F8F8;
+  padding-top: 1rem;
 
   .project {
-    min-width: 250px;
+    min-width: 200px;
     max-width: 500px;
-    margin: .5rem 1rem;
+    margin: .5rem .1rem;
+    align-self: flex-start;
 
     header {
       font-size: .7rem;

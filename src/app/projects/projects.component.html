@@ -1,6 +1,8 @@
 <mat-toolbar color="primary" class="toolbar">
   <span>Задачи</span>
-  <mat-icon class="add-btn" (click)="openCreateDialog()">+</mat-icon>
+  <button mat-icon-button (click)="openCreateDialog()" aria-label="Новая задача">
+    <mat-icon>add</mat-icon>
+  </button>
 </mat-toolbar>
 
 <div class="projects-container">
