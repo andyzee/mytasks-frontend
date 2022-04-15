@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Project } from '../model/Project';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTodoDialog } from './todo/create-todo-dialog.component';
+import { CreateTodoDialog } from './create-todo-dialog/create-todo-dialog.component';
 import { Todo } from '../model/Todo';
 
 

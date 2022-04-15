@@ -8,7 +8,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoComponent } from './projects/todo/todo.component';
 import { CommonModule } from '@angular/common';
-import { CreateTodoDialog } from './projects/todo/create-todo-dialog.component';
+import { CreateTodoDialog } from './projects/create-todo-dialog/create-todo-dialog.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
