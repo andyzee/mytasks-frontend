@@ -58,13 +58,15 @@ export class CreateTodoDialog implements OnInit {
     return this.todoForm.controls[prop]?.invalid
   }
 
-  errorMessage(prop: string) {
-    const errors = <any>this.todoForm.controls[prop].errors;
+  errorMessage(prop: string): string {
+    const errors = this.todoForm.controls[prop]?.errors;
     let messages = [];
-    if ('required' in errors)
-      messages.push('Необходимо заполнить')
-    if ('minlength' in errors)
-      messages.push(`Минимальная длина: ${errors['minlength']['requiredLength']}`)
+    if (errors) {
+      if ('required' in errors)
+        messages.push('Необходимо заполнить')
+      if ('minlength' in errors)
+        messages.push(`Минимальная длина: ${errors['minlength']['requiredLength']}`)
+    }
 
     return messages.join(', ')
   }
@@ -74,12 +76,12 @@ export class CreateTodoDialog implements OnInit {
   }
 }
 
-function requiredIf(prop: string, value: any): ValidatorFn {
+function requiredIf(prop: string, value: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.parent)
       return null
 
-    const propDependentOn = <AbstractControl>control.parent.get(prop);
-    return propDependentOn.value == value ? Validators.required(control) : null
+    const propDependentOn = control.parent.get(prop);
+    return propDependentOn?.value == value ? Validators.required(control) : null
   };
 }

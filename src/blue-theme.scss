@@ -12,9 +12,9 @@ $my-palette: (50 : #e7f5fb,
   800 : #2596cb,
   900 : #1886c2,
   A100 : #f6fbff,
-  A200 : #c3e8ff,
-  A400 : #90d5ff,
-  A700 : #76cbff,
+  A200 : #9f9f9f,
+  A400 : #767676,
+  A700 : #717171,
   contrast: (50 : #000000,
     100 : #000000,
     200 : #000000,
@@ -26,15 +26,15 @@ $my-palette: (50 : #e7f5fb,
     800 : #ffffff,
     900 : #ffffff,
     A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
   ));
 
 // $primary: mat.define-palette(mat.$light-blue-palette, 300);
 // $accent: mat.define-palette(mat.$light-blue-palette, A200, A100, A400);
 
-$primary: mat.define-palette($my-palette, 400);
+$primary: mat.define-palette($my-palette, 500);
 $accent: mat.define-palette($my-palette, A200, A100, A400);
 
 $typography: mat.define-typography-config($font-family: 'Roboto',
@@ -45,3 +45,7 @@ $theme: mat.define-light-theme((color: (primary: $primary,
 
 @include mat.core-theme($theme);
 @include mat.all-component-themes($theme);
+
+.mat-typography {
+  font-weight: 300;
+}

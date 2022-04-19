@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Project } from '../model/Project';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ export class ProjectsComponent implements OnInit {
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateTodoDialog, {
-      width: '300px',
+      width: '375px',
       data: { projects: this.projects }
     });
 

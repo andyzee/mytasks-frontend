@@ -1,3 +1,21 @@
-.full-width {
+.title {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  font-size: 10px;
+  padding-bottom: 20px;
+}
+
+.w100 {
   width: 100%;
+}
+
+.w50 {
+  width: 50%;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+.w50:last-child {
+  padding-right: 0;
 }

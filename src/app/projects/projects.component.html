@@ -11,6 +11,8 @@
       {{ project.title }}
     </header>
 
+    <mat-divider></mat-divider>
+
     <body>
       <ul>
         <li *ngFor="let todo of project.todos; let i = index; trackBy: todoTrackFn">

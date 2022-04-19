@@ -1,15 +1,15 @@
-<form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
-  <h2 mat-dialog-title>Новая задача</h2>
+<form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="create-todo-dialog">
+  <div class="title">Новая задача</div>
 
   <mat-dialog-content>
 
-    <mat-form-field class="full-width">
+    <mat-form-field class="w100" hideRequiredMarker="true">
       <mat-label>Название задачи</mat-label>
-      <input type="text" matInput formControlName="text" cdkFocusInitial>
+      <input type="text" matInput formControlName="text">
       <mat-error *ngIf="isInvalid('text')">{{ errorMessage('text') }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="full-width">
+    <mat-form-field class="w100" hideRequiredMarker="true">
       <mat-label>Категория</mat-label>
       <mat-select formControlName="project_id">
         <mat-option *ngFor="let project of projectList; trackBy: projectListTrackFn" [value]="project.id">
@@ -19,7 +19,7 @@
       <mat-error *ngIf="isInvalid('project_id')">{{ errorMessage('project_id') }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="full-width" *ngIf="todoForm.value.project_id == -1">
+    <mat-form-field class="w100" hideRequiredMarker="true" *ngIf="todoForm.value.project_id == -1">
       <mat-label>Название категории</mat-label>
       <input type="text" matInput formControlName="project_title">
       <mat-error *ngIf="isInvalid('project_title')">{{ errorMessage('project_title') }}</mat-error>
@@ -27,8 +27,12 @@
 
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Отмена</button>
-    <button mat-button type="submit">Создать</button>
+  <mat-dialog-actions align="center" class="actions">
+    <div class="w50">
+      <button class="w100" cdkFocusInitial mat-flat-button color="accent" mat-dialog-close>Отмена</button>
+    </div>
+    <div class="w50">
+      <button class="w100" mat-flat-button color="primary" type="submit">Ок</button>
+    </div>
   </mat-dialog-actions>
 </form>
