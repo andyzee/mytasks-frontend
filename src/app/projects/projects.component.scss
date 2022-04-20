@@ -10,8 +10,20 @@
     font-size: 1.6rem;
   }
 
-  .mat-icon {
-    font-size: 2rem;
+  .mat-icon-button {
+
+    $bsize: 2rem;
+
+    width: $bsize;
+    height: $bsize;
+    line-height: $bsize;
+
+    .mat-icon {
+      font-size: $bsize;
+      width: $bsize;
+      height: $bsize;
+      line-height: $bsize;
+    }
   }
 
 }
